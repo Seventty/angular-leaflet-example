@@ -1,1 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+@import "./../node_modules/leaflet/dist/leaflet.css";
+@import "./../node_modules/leaflet-draw/dist/leaflet.draw.css";
+* {
+  margin: 0;
+  padding: 0;
+}
