@@ -18,17 +18,18 @@ const iconDefault = L.icon({
 });
 L.Marker.prototype.options.icon = iconDefault;
 
-
 @Component({
   selector: 'leaflet',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements AfterViewInit {
-
   public lat: number = 18.477923;
   public long: number = -69.933491;
   private map: any;
+
+  public errorColor: string = "#f35858";
+  public primaryColor: string = "#f37f58";
 
   private initMap(): void {
 
@@ -48,46 +49,61 @@ export class MapComponent implements AfterViewInit {
       position: "topright"
     }).addTo(this.map);
 
-    const editableLayers = new L.FeatureGroup();
-    this.map.addLayer(editableLayers);
+    const drawFeatures = new L.FeatureGroup();
+    this.map.addLayer(drawFeatures);
 
     const options: any = {
       position: 'topright',
       draw: {
         polyline: {
           shapeOptions: {
-            color: '#f357a1',
+            color: this.primaryColor,
             weight: 10
           }
         },
         polygon: {
-          allowIntersection: false, // Restricts shapes to simple polygons
+          allowIntersection: false,
           drawError: {
-            color: '#e1e100', // Color the shape will turn when intersects
-            message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
+            color: this.errorColor,
+            message: '<strong>Figura Erronea:</strong> ¡No puedo dibujar esta figura!'
           },
           shapeOptions: {
-            color: '#bada55'
+            color: this.primaryColor
           }
         },
-        circle: true, // Turns off this drawing tool
+        circle: true,
         rectangle: {
           shapeOptions: {
-            clickable: false
+            clickable: true,
           }
         },
 
       },
       edit: {
-        featureGroup: editableLayers, //REQUIRED!!
+        featureGroup: drawFeatures, //REQUIRED!!
         remove: false
       }
     };
 
-    const drawControl = new L.Control.Draw({
-      position: "topright"
-    })
+    const drawControl = new L.Control.Draw(options);
     this.map.addControl(drawControl);
+
+    this.map.on("draw:created", (e: any) => {
+      const type = e.layerType;
+      const layer = e.layer;
+
+      console.log("🚀 ~ file: map.component.ts:102 ~ MapComponent ~ this.map.on ~ e:", layer)
+      drawFeatures.addLayer(layer);
+    });
+
+    this.map.on("draw:edited", function(e: any){
+      const type = e.layerType;
+      const layers = e.layer;
+
+      layers.eachLayer(function(e: any){
+        console.log(e)
+      })
+    })
 
     tiles.addTo(this.map);
   }
