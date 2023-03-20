@@ -1,1 +1,8 @@
-<leaflet></leaflet>
+<div>
+  <!-- <div class="submitButton">
+    <button type="submit" (click)="mapDataPrint()">Guardar</button>
+  </div> -->
+  <div>
+    <LeafletMap [EditMode]="true" (mapDataEmitter)="mapData($event)"></LeafletMap>
+  </div>
+</div>

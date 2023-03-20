@@ -9,13 +9,9 @@
           -86.279118,
           32.361538
         ]
-      },
-      "properties": {
-        "state": "Alabama",
-        "name": "Montgomery",
-        "population": 199518
       }
     },
+
     {
       "type": "Feature",
       "geometry": {
