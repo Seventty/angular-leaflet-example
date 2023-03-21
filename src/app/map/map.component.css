@@ -11,3 +11,10 @@
   height: 100vh;
 }
 
+#geoCarga {
+  position: absolute;
+  top: 100px;
+  right: 20px;
+  padding: 10px;
+  z-index: 400;
+}
