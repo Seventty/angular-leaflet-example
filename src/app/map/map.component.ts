@@ -4,12 +4,15 @@ import { MarkerService } from '../services/marker.service';
 import 'leaflet-draw';
 import { Figuras } from '../enums/figuras.enum';
 import { MapOptions } from '../enums/mapOptions.enum';
+import { Watermark } from './watermark';
 
 @Component({
   selector: 'LeafletMap',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
+
+
 export class MapComponent implements OnInit {
   @Input() ViewMode: boolean = false;
   @Input() EditMode: boolean = false;
@@ -43,6 +46,9 @@ export class MapComponent implements OnInit {
       position: "topright"
     }).addTo(this.map);
 
+    const watermark = new Watermark({ position: 'bottomleft' });
+    watermark.addTo(this.map);
+
     const drawFeatures = new L.FeatureGroup();
     this.map.addLayer(drawFeatures);
 
@@ -71,11 +77,11 @@ export class MapComponent implements OnInit {
             color: this.primaryColor
           }
         },
-        circle: {
+        circle: false, /* {
           shapeOptions: {
             color: this.primaryColor
           }
-        },
+        }, */
       },
       edit: {
         featureGroup: drawFeatures, //REQUIRED!!
@@ -150,18 +156,18 @@ export class MapComponent implements OnInit {
     }
   }
 
-  pushDataToCollection(data: any){
+  pushDataToCollection(data: any) {
     this.mapDataCollection.push(data);
     this.mapDataEmitter.emit(this.mapDataCollection);
   }
 
-  editDataInCollection(figuraId: number, newDraw: any){
+  editDataInCollection(figuraId: number, newDraw: any) {
     const index = this.mapDataCollection.findIndex(drawObject => drawObject.figuraId === figuraId);
     this.mapDataCollection[index] = newDraw;
     this.mapDataEmitter.emit(this.mapDataCollection);
   }
 
-  deleteDataFromCollection(figuraId: number){
+  deleteDataFromCollection(figuraId: number) {
     const index = this.mapDataCollection.findIndex(drawObject => drawObject.figuraId === figuraId);
     if (index !== -1) {
       this.mapDataCollection.splice(index, 1);
@@ -174,14 +180,14 @@ export class MapComponent implements OnInit {
     L.drawLocal.draw.toolbar.buttons.polyline = 'Herramienta para dibujar una Linea';
     L.drawLocal.draw.toolbar.buttons.polygon = 'Herramienta para dibujar un Poligono';
     L.drawLocal.draw.toolbar.buttons.rectangle = 'Herramienta para dibujar un Rectangulo';
-    L.drawLocal.draw.toolbar.buttons.circle = 'Herramienta para dibujar un Circulo';
+    //L.drawLocal.draw.toolbar.buttons.circle = 'Herramienta para dibujar un Circulo';
     L.drawLocal.draw.toolbar.buttons.marker = 'Herramienta para dibujar un Punto de Referencia';
     L.drawLocal.draw.toolbar.buttons.circlemarker = 'Herramienta para dibujar un Marcador Circular';
 
     L.drawLocal.draw.handlers.polyline.tooltip.start = 'Haz click y arrastra para crear una Linea';
     L.drawLocal.draw.handlers.polygon.tooltip.start = 'Haz click y arrastra para crear un perimetro de Poligono';
     L.drawLocal.draw.handlers.rectangle.tooltip.start = 'Haz click y arrastra para crear un perimetro de Rectangulo';
-    L.drawLocal.draw.handlers.circle.tooltip.start = 'Haz click y arrastra para crear un radio de Circulo';
+    // L.drawLocal.draw.handlers.circle.tooltip.start = 'Haz click y arrastra para crear un radio de Circulo';
     L.drawLocal.draw.handlers.marker.tooltip.start = 'Haz click sobre cualquier lugar del mapa para poner un Punto de Referencia';
     L.drawLocal.draw.handlers.circlemarker.tooltip.start = 'Haz click y arrastra para crear un marcador Circular';
     L.drawLocal.draw.toolbar.finish.text = "Finalizar";
