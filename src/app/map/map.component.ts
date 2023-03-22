@@ -1,10 +1,12 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, ViewChild } from '@angular/core';
 import * as L from 'leaflet';
 import { MarkerService } from '../services/marker.service';
 import 'leaflet-draw';
 import { Figuras } from '../enums/figuras.enum';
 import { MapOptions } from '../enums/mapOptions.enum';
 import { Watermark } from './watermark';
+import { environment } from './../../environments/environment';
+import { FileUploader } from 'ng2-file-upload';
 
 @Component({
   selector: 'LeafletMap',
@@ -12,13 +14,13 @@ import { Watermark } from './watermark';
   styleUrls: ['./map.component.css']
 })
 
-
 export class MapComponent implements OnInit {
   @Input() ViewMode: boolean = false;
   @Input() EditMode: boolean = false;
   @Input() FormulacionId: number = 0;
   @Input() TablaId: number = 0;
   @Output() mapDataEmitter = new EventEmitter;
+  @ViewChild("file") file: any;
 
   public lat: number = 18.477923;
   public long: number = -69.933491;
@@ -28,6 +30,8 @@ export class MapComponent implements OnInit {
   public primaryColor: string = "#f37f58";
   public figureType: Array<string> = ["polyline", "polygon", "rectangle", "circle", "marker", "circlemarker"]
   public mapDataCollection: Array<any> = [];
+  @Input() fileType: Array<string> = environment.allowedFileTypes;
+  fileUploaded: any;
 
   private initMap(): void {
     const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -91,6 +95,7 @@ export class MapComponent implements OnInit {
 
     const drawControl = new L.Control.Draw(options);
     if (!this.ViewMode) this.map.addControl(drawControl);
+
 
     //! Creando figura en mapa
     this.map.on("draw:created", (e: any) => {
@@ -194,6 +199,20 @@ export class MapComponent implements OnInit {
     L.drawLocal.draw.toolbar.finish.title = "Finaliza el trazado";
     L.drawLocal.draw.toolbar.undo.text = "Revertir punto trazado";
     L.drawLocal.draw.toolbar.undo.title = "Revertir el ultimo punto trazado punto";
+  }
+
+  fileUploadedChanged(event: any){
+    this.fileUploaded = event.target.files;
+    console.log(this.fileUploaded)
+    //this.readFileUploaded(this.file);
+  }
+
+  readFileUploaded(file: any){
+    const fileReader = new FileReader();
+    fileReader.onload = event => {
+      console.log(fileReader.result);
+    },
+    fileReader.readAsText(this.file);
   }
 
   constructor(private markerService: MarkerService) { }
