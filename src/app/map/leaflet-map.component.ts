@@ -1,20 +1,21 @@
 import { Component, OnInit, Input, EventEmitter, Output, ViewChild } from '@angular/core';
 import * as L from 'leaflet';
-import { MarkerService } from '../services/marker.service';
+//import { MarkerService } from '../services/marker.service';
 import 'leaflet-draw';
+
 import { Figuras } from '../enums/figuras.enum';
 import { MapOptions } from '../enums/mapOptions.enum';
 import { Watermark } from './watermark';
-import { environment } from './../../environments/environment';
+import { environment } from 'src/environments/environment';
 import { FileUploader } from 'ng2-file-upload';
 
 @Component({
   selector: 'LeafletMap',
-  templateUrl: './map.component.html',
-  styleUrls: ['./map.component.css']
+  templateUrl: './leaflet-map.component.html',
+  styleUrls: ['./leaflet-map.component.css']
 })
 
-export class MapComponent implements OnInit {
+export class LeafletMapComponent implements OnInit {
   @Input() ViewMode: boolean = false;
   @Input() EditMode: boolean = false;
   @Input() FormulacionId: number = 0;
@@ -22,8 +23,9 @@ export class MapComponent implements OnInit {
   @Output() mapDataEmitter = new EventEmitter;
   @ViewChild("file") file: any;
 
-  public lat: number = 18.477923;
-  public long: number = -69.933491;
+
+  public lat: number = 18.941791;
+  public long: number = -70.465962;
   private map: any;
 
   public errorColor: string = "#f35858";
@@ -42,7 +44,7 @@ export class MapComponent implements OnInit {
 
     this.map = L.map('map', {
       center: [this.lat, this.long],
-      zoom: 8,
+      zoom: 9,
       zoomControl: false,
     });
 
@@ -93,8 +95,12 @@ export class MapComponent implements OnInit {
       }
     };
 
-    const drawControl = new L.Control.Draw(options);
-    if (!this.ViewMode) this.map.addControl(drawControl);
+    if(this.EditMode){
+      const drawControl = new L.Control.Draw(options);
+      this.map.addControl(drawControl);
+    }
+   // const drawControl = new L.Control.Draw();
+    //if (!this.ViewMode) this.map.addControl(drawControl);
 
 
     //! Creando figura en mapa
@@ -215,7 +221,7 @@ export class MapComponent implements OnInit {
     fileReader.readAsText(this.file);
   }
 
-  constructor(private markerService: MarkerService) { }
+  constructor() { }
 
   ngOnInit(): void {
     this.localDrawConfigurator()
