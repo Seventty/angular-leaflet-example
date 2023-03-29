@@ -219,12 +219,18 @@ export class LeafletMapComponent implements OnInit {
   }
 
   readFile(file: any) {
-    var reader = new FileReader();
+    const reader = new FileReader();
+
     reader.onload = () => {
       const result: any = reader.result;
       const geoJson = JSON.parse(result);
-      L.geoJSON(geoJson).addTo(this.map);
+      //L.geoJSON(geoJson).addTo(this.map);
+
+      L.geoJSON(geoJson).bindPopup(function (layer: any) {
+        return layer.feature.properties.TOPONIMIA;
+    }).addTo(this.map);
     };
+
     reader.readAsText(file);
   }
 
