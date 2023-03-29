@@ -33,7 +33,7 @@ export class LeafletMapComponent implements OnInit {
   public figureType: Array<string> = ["polyline", "polygon", "rectangle", "circle", "marker", "circlemarker"]
   public mapDataCollection: Array<any> = [];
   @Input() fileType: Array<string> = environment.allowedFileTypes;
-  fileUploaded: any;
+  fileContent: ArrayBuffer | null = null;
 
   private initMap(): void {
     const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -95,11 +95,11 @@ export class LeafletMapComponent implements OnInit {
       }
     };
 
-    if(this.EditMode){
+    if (this.EditMode) {
       const drawControl = new L.Control.Draw(options);
       this.map.addControl(drawControl);
     }
-   // const drawControl = new L.Control.Draw();
+    // const drawControl = new L.Control.Draw();
     //if (!this.ViewMode) this.map.addControl(drawControl);
 
 
@@ -207,18 +207,25 @@ export class LeafletMapComponent implements OnInit {
     L.drawLocal.draw.toolbar.undo.title = "Revertir el ultimo punto trazado punto";
   }
 
-  fileUploadedChanged(event: any){
-    this.fileUploaded = event.target.files;
-    console.log(this.fileUploaded)
-    //this.readFileUploaded(this.file);
+  onFileSelect(event: any) {
+    const file = event.target.files[0];
+    this.fileContent = file;
+    const fileName = file.name.split(".")[file.name.split(".").length - 1]
+    if (fileName === "geojson") {
+      this.readFile(this.fileContent);
+    } else {
+      console.log("PRONTO OTROS FORMATOS")
+    }
   }
 
-  readFileUploaded(file: any){
-    const fileReader = new FileReader();
-    fileReader.onload = event => {
-      console.log(fileReader.result);
-    },
-    fileReader.readAsText(this.file);
+  readFile(file: any) {
+    var reader = new FileReader();
+    reader.onload = () => {
+      const result: any = reader.result;
+      const geoJson = JSON.parse(result);
+      L.geoJSON(geoJson).addTo(this.map);
+    };
+    reader.readAsText(file);
   }
 
   constructor() { }
