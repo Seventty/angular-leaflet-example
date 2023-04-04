@@ -1,6 +1,34 @@
 <div class="map-container">
-  <input type="file" class="geoCarga" [accept]="fileType" (change)="onFileSelect($event)">
+  <div>
+    <button class="importarBoton" role="button" (click)="openModal(content)">IMPORTAR ARCHIVOS</button>
+  </div>
+  <!-- <input type="file" class="geoCarga" [accept]="fileType" (change)="onFileSelect($event)"> -->
   <div class="map-frame">
     <div id="map"></div>
   </div>
 </div>
+
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+		<form>
+			<div class="mb-3">
+				<label for="dateOfBirth">Date of birth</label>
+				<div class="input-group">
+					<input
+						id="dateOfBirth"
+						class="form-control"
+						placeholder="yyyy-mm-dd"
+						name="dp"
+						ngbDatepicker
+						#dp="ngbDatepicker"
+					/>
+					<button class="btn btn-outline-secondary bi bi-calendar3" (click)="dp.toggle()" type="button"></button>
+				</div>
+			</div>
+		</form>
+	</div>
+</ng-template>

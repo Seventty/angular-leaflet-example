@@ -8,6 +8,7 @@ import { MapOptions } from '../enums/mapOptions.enum';
 import { Watermark } from './watermark';
 import { environment } from 'src/environments/environment';
 import { FileUploader } from 'ng2-file-upload';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'LeafletMap',
@@ -234,7 +235,18 @@ export class LeafletMapComponent implements OnInit {
     reader.readAsText(file);
   }
 
-  constructor() { }
+  openModal(content: any) {
+		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+			/* (result) => {
+				this.closeResult = `Closed with: ${result}`;
+			},
+			(reason) => {
+				this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+			}, */
+		);
+	}
+
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.localDrawConfigurator()

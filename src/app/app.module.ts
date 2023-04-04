@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { LeafletMapComponent } from './map/leaflet-map.component';
 import { MarkerService } from './services/marker.service';
 import { HttpClientModule } from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   providers: [MarkerService],
   bootstrap: [AppComponent]
