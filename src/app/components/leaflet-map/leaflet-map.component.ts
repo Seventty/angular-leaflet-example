@@ -3,8 +3,8 @@ import * as L from 'leaflet';
 //import { MarkerService } from '../services/marker.service';
 import 'leaflet-draw';
 
-import { Figuras } from '../enums/figuras.enum';
-import { MapOptions } from '../enums/mapOptions.enum';
+import { Figuras } from '../../enums/figuras.enum';
+import { MapOptions } from '../../enums/mapOptions.enum';
 import { Watermark } from './watermark';
 import { environment } from 'src/environments/environment';
 import { FileUploader } from 'ng2-file-upload';
@@ -13,7 +13,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'LeafletMap',
   templateUrl: './leaflet-map.component.html',
-  styleUrls: ['./leaflet-map.component.css']
+  styleUrls: ['./leaflet-map.component.scss']
 })
 
 export class LeafletMapComponent implements OnInit {
@@ -227,9 +227,9 @@ export class LeafletMapComponent implements OnInit {
       const geoJson = JSON.parse(result);
       //L.geoJSON(geoJson).addTo(this.map);
 
-      L.geoJSON(geoJson).bindPopup(function (layer: any) {
+      /* L.geoJSON(geoJson).bindPopup(function (layer: any) {
         return layer.feature.properties.TOPONIMIA;
-    }).addTo(this.map);
+    }).addTo(this.map); */
     };
 
     reader.readAsText(file);

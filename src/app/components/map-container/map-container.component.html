@@ -1,0 +1,32 @@
+<div class="card">
+  <div class="buttonContainer">
+    <button class="importButton" role="button" (click)="openUploadFileMapModal(uploadFileMapModal)">IMPORTAR ARCHIVOS</button>
+  </div>
+  <div class="card-content">
+    <div class="card-body">
+      <div class="map">
+        <LeafletMap (mapDataEmitter)="mapData($event)"></LeafletMap>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #uploadFileMapModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">GeoCarga De Archivos</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="mb-3">
+        <fileUpload></fileUpload>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="uploadFiles()">Guardar</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
