@@ -235,18 +235,7 @@ export class LeafletMapComponent implements OnInit {
     reader.readAsText(file);
   }
 
-  openModal(content: any) {
-		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
-			/* (result) => {
-				this.closeResult = `Closed with: ${result}`;
-			},
-			(reason) => {
-				this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-			}, */
-		);
-	}
-
-  constructor(private modalService: NgbModal) { }
+  constructor() { }
 
   ngOnInit(): void {
     this.localDrawConfigurator()

@@ -1,23 +1,21 @@
-<!--File Upload Starts-->
 <!-- <div class="py-5 mb-3 text-center font-medium-5 text-uppercase grey my-drop-zone"
   [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" ng2FileDrop [uploader]="uploader" (fileOver)="fileOverBase($event)"
   (onFileDrop)="addedFileToQueue()">
+
   <span class="d-block">Arrastre un archivo o hacer click en el botón</span>
-  <UIButton color="primary" size="sm" [block]="false" (click)="handleFile(fileInput)"><i class="ft-search"></i> Buscar
-    Archivo</UIButton>
+
+  <button color="primary" size="sm" (click)="handleFile(fileInput)"><i class="ft-search"></i> Buscar Archivo</button>
+
   <input #fileInput type="file" ng2FileSelect [uploader]="uploader" [hidden]="true" [multiple]="multiple"
     [accept]="mimeType" (onFileSelected)="addedFileToQueue()">
 </div> -->
-<div class="py-5 mb-3 text-center font-medium-5 text-uppercase grey my-drop-zone">
-  <span class="d-block">Arrastre un archivo o hacer click en el botón</span>
-  <button color="primary" size="sm"><i class="ft-search"></i> Buscar
-    Archivo</button>
-  <input #fileInput type="file" ng2FileSelect>
-</div>
 
+<input type="file" [hidden]="false" [multiple]="multiple" [accept]="mimeType" (change)="addedFileToQueue()">
+
+<!--
 <span><b>Cola de Archivos</b></span>
-<!-- <p>Cantidad de Archivos: {{ uploader?.queue?.length }}</p> -->
-<p>Cantidad de Archivos: 1</p>
+<p>Cantidad de Archivos: {{ uploader.queue.length }}</p>
+
 
 <div class="table-responsive">
   <table class="table">
@@ -28,10 +26,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td class="text-bold-600">Ejemplo1</td>
+      <tr *ngFor="let item of uploader.queue">
+        <td class="text-bold-600">{{ item?.file?.name }}</td>
         <td class="text-center">
-          <button type="button" class="btn btn-danger">
+          <button type="button" class="btn btn-danger" (click)="removeFileFromQueue(item)">
             <span class="fa fa-trash"></span>
           </button>
         </td>
@@ -39,4 +37,4 @@
     </tbody>
   </table>
 </div>
-<!--File Upload Ends-->
+ -->

@@ -4,6 +4,14 @@
 
 export const environment = {
   production: false,
+  allowedMimeTypes: [
+    /* 'application/pdf',
+    'application/msword',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'image/jpeg',
+    'image/jpg',
+    'image/png' */
+  ],
   allowedFileTypes: [
     '.gpkg',
     '.kml',
@@ -14,6 +22,7 @@ export const environment = {
     '.cpg',
     '.shx',
   ],
+  appMaxFileSize: 5, // Tamaño en MB
 };
 
 /*
