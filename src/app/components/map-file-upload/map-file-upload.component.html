@@ -1,0 +1,35 @@
+<div class="py-5 mb-3 text-center font-medium-5 text-uppercase grey my-drop-zone"
+  [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" ng2FileDrop [uploader]="uploader" (fileOver)="fileOverBase($event)"
+  (onFileDrop)="addedFileToQueue()">
+
+  <span class="d-block">Arrastre un archivo o hacer click en el botón</span>
+
+  <button color="primary" size="sm" (click)="handleFile(fileInput)"><i class="ft-search"></i> Buscar Archivo</button>
+
+  <input #fileInput type="file" ng2FileSelect [uploader]="uploader" [hidden]="true" [multiple]="multiple"
+    [accept]="mimeType" (onFileSelected)="addedFileToQueue()">
+</div>
+
+<span><b>Cola de Archivos</b></span>
+<p>Cantidad de Archivos: {{ uploader.queue.length }}</p>
+
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th width="50%">Nombre del Archivo</th>
+        <th class="text-center">Remover Archivo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of uploader.queue">
+        <td class="text-bold-600">{{ item?.file?.name }}</td>
+        <td class="text-center">
+          <button type="button" class="btn btn-danger" (click)="removeFileFromQueue(item)">
+            <span class="fa fa-trash"></span>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
