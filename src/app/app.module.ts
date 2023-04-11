@@ -7,7 +7,7 @@ import { MarkerService } from './services/marker.service';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MapContainerComponent } from './components/map-container/map-container.component';
-import { FileUploadComponent } from './components/file-upload/file-upload.component';
+import { MapFileUploadComponent } from './components/map-file-upload/map-file-upload.component';
 import { FileUploadModule } from 'ng2-file-upload';
 
 @NgModule({
@@ -15,7 +15,7 @@ import { FileUploadModule } from 'ng2-file-upload';
     AppComponent,
     LeafletMapComponent,
     MapContainerComponent,
-    FileUploadComponent
+    MapFileUploadComponent
   ],
   imports: [
     BrowserModule,

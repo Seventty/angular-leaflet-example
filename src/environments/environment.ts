@@ -12,7 +12,7 @@ export const environment = {
     'image/jpg',
     'image/png' */
   ],
-  allowedFileTypes: [
+  allowedMapFileTypes: [
     '.gpkg',
     '.kml',
     '.geojson',

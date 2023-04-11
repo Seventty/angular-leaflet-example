@@ -3,8 +3,8 @@ import * as L from 'leaflet';
 //import { MarkerService } from '../services/marker.service';
 import 'leaflet-draw';
 
-import { Figuras } from '../../enums/figuras.enum';
-import { MapOptions } from '../../enums/mapOptions.enum';
+import { Figuras } from 'src/app/enums/figuras.enum';
+import { MapOptions } from 'src/app/enums/mapOptions.enum';
 import { Watermark } from './watermark';
 import { environment } from 'src/environments/environment';
 import { FileUploader } from 'ng2-file-upload';
@@ -33,7 +33,7 @@ export class LeafletMapComponent implements OnInit {
   public primaryColor: string = "#f37f58";
   public figureType: Array<string> = ["polyline", "polygon", "rectangle", "circle", "marker", "circlemarker"]
   public mapDataCollection: Array<any> = [];
-  @Input() fileType: Array<string> = environment.allowedFileTypes;
+  @Input() fileType: Array<string> = environment.allowedMapFileTypes;
   fileContent: ArrayBuffer | null = null;
 
   private initMap(): void {
@@ -235,7 +235,18 @@ export class LeafletMapComponent implements OnInit {
     reader.readAsText(file);
   }
 
-  constructor() { }
+  openModal(content: any) {
+		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+			/* (result) => {
+				this.closeResult = `Closed with: ${result}`;
+			},
+			(reason) => {
+				this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+			}, */
+		);
+	}
+
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.localDrawConfigurator()
