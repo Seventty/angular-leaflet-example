@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   allowedMimeTypes: [
+    'application/geo+json'
     /* 'application/pdf',
     'application/msword',
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document',

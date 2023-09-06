@@ -27,6 +27,7 @@
     "leaflet": "^1.9.3",
     "leaflet-draw": "^1.0.4",
     "leaflet-easybutton": "^2.4.0",
+    "leaflet-editable": "^1.2.0",
     "ng2-file-upload": "^1.4.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
